@@ -1,0 +1,21 @@
+.header {
+  align-items: center;
+  background-color: rgba(0, 59, 229, 1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.logo {
+  width: 240px;
+}
+
+.cart-button {
+  background-color: transparent;
+  border: 0;
+}
+
+.cart-image {
+  height: 36px;
+}

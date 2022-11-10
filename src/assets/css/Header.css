@@ -1,0 +1,22 @@
+.header {
+  align-items: center;
+  background-color: rgba(0, 59, 229, 1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 1.5rem;
+}
+
+.header img {
+  min-width: 100px;
+  width: 18%;
+}
+
+.header button {
+  background-color: transparent;
+  border: 0;
+}
+
+.cart-image {
+  height: 36px;
+}

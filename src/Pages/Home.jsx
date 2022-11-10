@@ -14,6 +14,13 @@ class Home extends Component {
     });
   };
 
+  addItemCartButton = ({ target }) => {
+    const { id } = target;
+    const { listProduct } = this.state;
+    const item = listProduct.find((product) => product.id === id);
+    localStorage.setItem('Cart-Item', item);
+  }; 
+
   render() {
     const { searchTerm, listProduct } = this.state;
     const { history } = this.props;
@@ -29,6 +36,13 @@ class Home extends Component {
             onChange={ this.onInputChange }
           />
         </label>
+        <button
+          type="button"
+          data-testid="shopping-cart-button"
+          onClick={ () => history.push('/shoppingcart') }
+        >
+          Meu carrinho
+        </button>
         { listProduct.length === 0
           && (
             <p
@@ -37,13 +51,6 @@ class Home extends Component {
               Digite algum termo de pesquisa ou escolha uma categoria.
             </p>) }
 
-        <button
-          type="button"
-          data-testid="shopping-cart-button"
-          onClick={ () => history.push('/shoppingcart') }
-        >
-          Meu carrinho
-        </button>
       </div>
     );
   }

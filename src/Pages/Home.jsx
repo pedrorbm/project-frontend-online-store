@@ -21,7 +21,7 @@ class Home extends Component {
     return (
       <div>
         <Header { ...headerProps } handleResult={ this.handleResult } />
-        <Category />
+        <Category handleResult={ this.handleResult } />
         <Products { ...this.state } />
       </div>
     );

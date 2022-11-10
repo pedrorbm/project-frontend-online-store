@@ -1,56 +1,28 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import Category from '../Components/Category';
+import Header from '../Components/Header';
+import Products from '../Components/Products';
 
 class Home extends Component {
   state = {
-    searchTerm: '',
-    listProduct: [],
+    searchResult: [],
+    search: false,
   };
 
-  onInputChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState({
-      [name]: value,
-    });
+  handleResult = (value) => {
+    this.setState({ searchResult: value, search: true });
   };
-
-  addItemCartButton = ({ target }) => {
-    const { id } = target;
-    const { listProduct } = this.state;
-    const item = listProduct.find((product) => product.id === id);
-    localStorage.setItem('Cart-Item', item);
-  }; 
 
   render() {
-    const { searchTerm, listProduct } = this.state;
+    const { searchResult, search } = this.state;
     const { history } = this.props;
-
+    const headerProps = { history, searchResult, search };
     return (
       <div>
-        <label htmlFor="search">
-          <input
-            type="text"
-            id="search"
-            name="searchTerm"
-            value={ searchTerm }
-            onChange={ this.onInputChange }
-          />
-        </label>
-        <button
-          type="button"
-          data-testid="shopping-cart-button"
-          onClick={ () => history.push('/shoppingcart') }
-        >
-          Meu carrinho
-        </button>
-        { listProduct.length === 0
-          && (
-            <p
-              data-testid="home-initial-message"
-            >
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </p>) }
-
+        <Header { ...headerProps } handleResult={ this.handleResult } />
+        <Category handleResult={ this.handleResult } />
+        <Products { ...this.state } />
       </div>
     );
   }

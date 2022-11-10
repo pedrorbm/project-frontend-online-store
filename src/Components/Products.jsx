@@ -4,7 +4,7 @@ import ProductCard from './ProductCard';
 
 export default class Products extends Component {
   render() {
-    const { searchResult, search } = this.props;
+    const { searchResult, search, onProductClick } = this.props;
     const controller = searchResult.length === 0;
     const searchController = searchResult.length === 0 && search;
     return (
@@ -18,6 +18,7 @@ export default class Products extends Component {
               title={ element.title }
               thumbnail={ element.thumbnail }
               price={ element.price }
+              onProductClick={ () => onProductClick(element.id) }
             />
           ))}
       </div>
@@ -28,6 +29,7 @@ export default class Products extends Component {
 Products.defaultProps = {
   searchResult: [],
   search: false,
+  onProductClick: null,
 };
 
 Products.propTypes = {
@@ -35,4 +37,5 @@ Products.propTypes = {
     PropTypes.shape({}),
   ),
   search: PropTypes.bool,
+  onProductClick: PropTypes.func,
 };

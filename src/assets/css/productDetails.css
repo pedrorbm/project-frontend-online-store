@@ -1,0 +1,20 @@
+.product-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.product-container button {
+  align-self: flex-end;
+}
+
+.product-card {
+  border: 1px solid black;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 1rem;
+}

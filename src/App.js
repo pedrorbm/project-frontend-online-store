@@ -11,7 +11,10 @@ class App extends Component {
       <>
         {/* <Header { ...headerProps } /> */}
         <Switch>
-          <Route path="/product" component={ ProductDetails } />
+          <Route
+            path="/product/:id"
+            render={ (props) => <ProductDetails { ...props } /> }
+          />
           <Route
             path="/shoppingcart"
             render={ (props) => <ShoppingCart { ...props } /> }

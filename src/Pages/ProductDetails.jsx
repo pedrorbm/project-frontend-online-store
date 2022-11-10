@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 
 class ProductDetails extends Component {
@@ -10,7 +11,12 @@ class ProductDetails extends Component {
   };
 
   async componentDidMount() {
-    const product = await getProductById('MLA935110000'); // futuramente pegar o ID da rota;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+    const product = await getProductById(id);
     const { title, price, thumbnail } = product;
     this.setState({
       title,
@@ -44,5 +50,13 @@ class ProductDetails extends Component {
     );
   }
 }
+
+ProductDetails.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
+};
 
 export default ProductDetails;

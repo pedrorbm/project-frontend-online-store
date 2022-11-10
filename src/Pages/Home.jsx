@@ -14,15 +14,20 @@ class Home extends Component {
     this.setState({ searchResult: value, search: true });
   };
 
+  goToProductDetails = (history, productId) => history.push(`/product/${productId}`);
+
   render() {
-    const { searchResult, search } = this.state;
     const { history } = this.props;
+    const { searchResult, search } = this.state;
     const headerProps = { history, searchResult, search };
     return (
       <div>
         <Header { ...headerProps } handleResult={ this.handleResult } />
         <Category handleResult={ this.handleResult } />
-        <Products { ...this.state } />
+        <Products
+          { ...this.state }
+          onProductClick={ (event) => this.goToProductDetails(history, event) }
+        />
       </div>
     );
   }

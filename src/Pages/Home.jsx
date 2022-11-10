@@ -1,31 +1,19 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Category from '../Components/Category';
-import Header from '../Components/Header';
 import Products from '../Components/Products';
 
 class Home extends Component {
-  state = {
-    searchResult: [],
-    search: false,
-  };
-
-  handleResult = (value) => {
-    this.setState({ searchResult: value, search: true });
-  };
-
   goToProductDetails = (history, productId) => history.push(`/product/${productId}`);
 
   render() {
-    const { history } = this.props;
-    const { searchResult, search } = this.state;
-    const headerProps = { history, searchResult, search };
+    const { history, handleResult, searchResult, search } = this.props;
     return (
       <div>
-        <Header { ...headerProps } handleResult={ this.handleResult } />
-        <Category handleResult={ this.handleResult } />
+        <Category handleResult={ handleResult } />
         <Products
-          { ...this.state }
+          search={ search }
+          searchResult={ searchResult }
           onProductClick={ (event) => this.goToProductDetails(history, event) }
         />
       </div>
@@ -34,6 +22,7 @@ class Home extends Component {
 }
 
 Home.propTypes = {
+  handleResult: PropTypes.func.isRequired,
   history: PropTypes.shape({}),
 }.isRequired;
 

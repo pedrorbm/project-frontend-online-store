@@ -7,9 +7,8 @@
   padding: 1.5rem;
 }
 
-.header img {
-  min-width: 100px;
-  width: 18%;
+.logo {
+  width: 240px;
 }
 
 .cart-button {

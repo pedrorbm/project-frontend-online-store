@@ -16,7 +16,7 @@ class Header extends Component {
             { ...this.props }
 
           />
-          <Link to="/"><img src={ logo } alt="Logo" /></Link>
+          <Link to="/"><img className="logo" src={ logo } alt="Logo" /></Link>
           <Link
             to="/shoppingcart"
             data-testid="shopping-cart-button"

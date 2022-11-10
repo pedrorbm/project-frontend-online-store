@@ -41,8 +41,18 @@
   }
 }
 
+.home {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+}
+
 @import './assets/css/productDetails.css' ;
 
 @import './assets/css/Header.css' ;
 
 @import './assets/css/Search.css' ;
+
+@import './assets/css/ProductCards.css' ;
+
+@import './assets/css/Categories.css' ;

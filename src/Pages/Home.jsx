@@ -9,7 +9,7 @@ class Home extends Component {
   render() {
     const { history, handleResult, searchResult, search } = this.props;
     return (
-      <div>
+      <div className="home">
         <Category handleResult={ handleResult } />
         <Products
           search={ search }

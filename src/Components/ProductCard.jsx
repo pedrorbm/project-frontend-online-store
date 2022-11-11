@@ -2,9 +2,17 @@ import React, { Component } from 'react';
 
 export default class ProductCard extends Component {
   render() {
-    const { title, price, thumbnail, onProductClick, id, addItemCartButton } = this.props;
+    const {
+      title,
+      price,
+      thumbnail,
+      onProductClick,
+      id,
+      addItemCartButton,
+      freeShipping } = this.props;
     return (
       <div data-testid="product" className="product-card">
+        {freeShipping && <span data-testid="free-shipping">Frete grátis</span>}
         <p>{ title }</p>
         <img src={ thumbnail } alt={ title } />
         <p>{ `R$ ${price}` }</p>

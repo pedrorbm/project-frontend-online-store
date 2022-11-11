@@ -8,6 +8,7 @@ class ProductDetails extends Component {
     thumbnail: '',
     price: '',
     attributes: [],
+    freeShipping: false,
   };
 
   async componentDidMount() {
@@ -17,12 +18,19 @@ class ProductDetails extends Component {
       },
     } = this.props;
     const product = await getProductById(id);
-    const { title, price, thumbnail, attributes } = product;
+    const {
+      title,
+      price,
+      thumbnail,
+      attributes,
+      shipping: { free_shipping: freeShipping },
+    } = product;
     this.setState({
       title,
       price,
       thumbnail,
       attributes,
+      freeShipping,
     });
   }
 
@@ -48,11 +56,12 @@ class ProductDetails extends Component {
         params: { id },
       },
     } = this.props;
-    const { title, thumbnail, price, attributes } = this.state;
+    const { title, thumbnail, price, attributes, freeShipping } = this.state;
     return (
       <section className="product-container">
         <div className="product-detail">
           <div className="product-info">
+            {freeShipping && <span data-testid="free-shipping">Frete grátis</span>}
             <p data-testid="product-detail-name">{title}</p>
             <img
               src={ thumbnail }

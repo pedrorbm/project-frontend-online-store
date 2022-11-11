@@ -3,26 +3,30 @@ import React, { Component } from 'react';
 class ShoppingCart extends Component {
   state = {
     shoppingCart: [],
+    isCartEmpty: true,
   };
 
   componentDidMount() {
-    const cartItems = JSON.parse(localStorage.getItem('Cart-Item'));
-    if (localStorage.length > 0) {
-      this.setState({
-        shoppingCart: cartItems,
-      });
-      // this.setState((previousState) => ({
-      //   shoppingCart: [...previousState.shoppingCart, cartItems] }));
-    }
+    this.getCartItems();
   }
 
+  getCartItems = () => {
+    const cartItems = JSON.parse(localStorage.getItem('Cart-Item'));
+    console.log(cartItems.length);
+    const isEmpty = cartItems.length === 0 || cartItems === null;
+    if (!isEmpty) {
+      this.setState((previousState) => ({
+        isCartEmpty: false,
+        shoppingCart: [...previousState.shoppingCart, ...cartItems] }));
+    }
+  };
+
   render() {
-    const { shoppingCart } = this.state;
-    console.log(shoppingCart);
+    const { shoppingCart, isCartEmpty } = this.state;
     const number = 1;
     return (
       <div>
-        { shoppingCart.length === 0
+        { isCartEmpty
           ? (
             <p
               data-testid="shopping-cart-empty-message"

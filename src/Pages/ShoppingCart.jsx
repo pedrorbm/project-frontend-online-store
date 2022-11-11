@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import CartItem from '../Components/CartItem';
 // import { Link } from 'react-router-dom';
 // import CartItems from '../Components/CartItems';
 // import Header from '../Components/Header';
@@ -56,9 +58,10 @@ class ShoppingCart extends Component {
     //     </div>
     //   </>
     const { shoppingCart } = this.state;
-    const number = 1;
+    // const number = 1;
     return (
       <div>
+        <Link to="/">Voltar</Link>
         { shoppingCart.length === 0
           ? (
             <p
@@ -67,22 +70,28 @@ class ShoppingCart extends Component {
               Seu carrinho está vazio
             </p>)
           : shoppingCart.map((cartItem) => (
-            <div
+            <CartItem
               key={ cartItem.id }
-            >
-              <p data-testid="shopping-cart-product-name">{ cartItem.title }</p>
-              <img src={ cartItem.thumbnail } alt={ cartItem.title } />
-              <p>{`R$ ${cartItem.price}` }</p>
-              <p
-                data-testid="shopping-cart-product-quantity"
-              >
-                { `Quantidade ${number}` }
-              </p>
-            </div>
-          )) }
+              item={ cartItem }
+            />)) }
       </div>
     );
   }
 }
 
 export default ShoppingCart;
+
+// (
+//   <div
+//     key={ cartItem.id }
+//   >
+//     <p data-testid="shopping-cart-product-name">{ cartItem.title }</p>
+//     <img src={ cartItem.thumbnail } alt={ cartItem.title } />
+//     <p>{`R$ ${cartItem.price}` }</p>
+//     <p
+//       data-testid="shopping-cart-product-quantity"
+//     >
+//       { `Quantidade ${number}` }
+//     </p>
+//   </div>
+// )

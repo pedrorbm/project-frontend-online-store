@@ -11,37 +11,43 @@ class ShoppingCart extends Component {
       this.setState({
         shoppingCart: cartItems,
       });
+      // this.setState((previousState) => ({
+      //   shoppingCart: [...previousState.shoppingCart, cartItems] }));
     }
   }
 
   render() {
     const { shoppingCart } = this.state;
+    console.log(shoppingCart);
     const number = 1;
     return (
       <div>
         { shoppingCart.length === 0
-          && (
+          ? (
             <p
               data-testid="shopping-cart-empty-message"
             >
               Seu carrinho está vazio
-            </p>) }
-        <ul>
-          { shoppingCart.map((cartItem) => (
-            <li
-              key={ cartItem.id }
-            >
-              <p data-testid="shopping-cart-product-name">{ cartItem.title }</p>
-              <img src={ cartItem.thumbnail } alt={ cartItem.title } />
-              <p>{`R$ ${cartItem.price}` }</p>
-              <p
-                data-testid="shopping-cart-product-quantity"
-              >
-                { `Quantidade ${number}` }
-              </p>
-            </li>
-          )) }
-        </ul>
+            </p>)
+          : (
+            <ul>
+              { shoppingCart.map((cartItem) => (
+                <li
+                  key={ cartItem.id }
+                >
+                  <p data-testid="shopping-cart-product-name">{ cartItem.title }</p>
+                  <img src={ cartItem.thumbnail } alt={ cartItem.title } />
+                  <p>{`R$ ${cartItem.price}` }</p>
+                  <p
+                    data-testid="shopping-cart-product-quantity"
+                  >
+                    { `Quantidade ${number}` }
+                  </p>
+                </li>
+              )) }
+            </ul>
+          )}
+
       </div>
     );
   }

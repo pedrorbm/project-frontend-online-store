@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
+import FreeShipping from '../Components/FreeShipping';
 
 class ProductDetails extends Component {
   state = {
@@ -61,7 +62,7 @@ class ProductDetails extends Component {
       <section className="product-container">
         <div className="product-detail">
           <div className="product-info">
-            {freeShipping && <span data-testid="free-shipping">Frete grátis</span>}
+            {freeShipping && <FreeShipping />}
             <p data-testid="product-detail-name">{title}</p>
             <img
               src={ thumbnail }

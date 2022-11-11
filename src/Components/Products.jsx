@@ -25,18 +25,22 @@ export default class Products extends Component {
         { controller && 'Digite algum termo de pesquisa ou escolha uma categoria.' }
         { (searchController)
           ? <p>Nenhum produto foi encontrado</p>
-          : searchResult.map((element) => (
-            <ProductCard
-              searchResult={ searchResult }
-              key={ element.id }
-              title={ element.title }
-              thumbnail={ element.thumbnail }
-              price={ element.price }
-              id={ element.id }
-              addItemCartButton={ this.addItemCartButton }
-              onProductClick={ () => onProductClick(element.id) }
-            />
-          ))}
+          : (
+            <div className="products">
+              {searchResult.map((element) => (
+                <ProductCard
+                  searchResult={ searchResult }
+                  key={ element.id }
+                  title={ element.title }
+                  thumbnail={ element.thumbnail }
+                  price={ element.price }
+                  id={ element.id }
+                  addItemCartButton={ this.addItemCartButton }
+                  onProductClick={ () => onProductClick(element.id) }
+                />
+              ))}
+            </div>
+          )}
       </div>
     );
   }

@@ -37,7 +37,7 @@ class ProductDetails extends Component {
             <Link to="/shoppingcart">Carrinho</Link>
           </button>
         </div>
-        <div className="product-card">
+        <div className="product-detail">
           <div>
             <img src={ thumbnail } alt={ title } data-testid="product-detail-image" />
           </div>

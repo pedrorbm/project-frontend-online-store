@@ -10,11 +10,13 @@ class Checkout extends Component {
     phone: '',
     cep: '',
     adress: '',
+    error: false,
+    radio: '',
   };
 
   componentDidMount() {
     const cartItems = JSON.parse(localStorage.getItem('Cart-Item'));
-    if (localStorage.length > 0) {
+    if (cartItems !== null) {
       this.setState({
         shoppingCart: cartItems,
       });
@@ -25,6 +27,10 @@ class Checkout extends Component {
     const { name, value } = target;
     this.setState({
       [name]: value,
+    }, () => {
+      if (this.validationForm()) {
+        this.setState({ error: false });
+      }
     });
   };
 
@@ -36,6 +42,7 @@ class Checkout extends Component {
       phone,
       cep,
       adress,
+      radio,
     } = this.state;
     const validation = (fullname.length > 0
       && email.length > 0
@@ -43,22 +50,34 @@ class Checkout extends Component {
       && phone.length > 0
       && cep.length > 0
       && adress.length > 0
+      && radio.length > 0
     );
     return validation;
   };
 
-  checkoutButton = () => {
+  checkoutButton = (event) => {
+    event.preventDefault();
     if (this.validationForm()) {
-      this.setState({ error: false });
       const { history } = this.props;
       history.push('/');
       localStorage.clear();
+    } else {
+      this.setState({ error: true });
     }
-    this.setState({ error: true });
   };
 
   render() {
-    const { shoppingCart, fullname, email, cpf, phone, cep, adress, error } = this.state;
+    const {
+      shoppingCart,
+      fullname,
+      email,
+      cpf,
+      phone,
+      cep,
+      adress,
+      error,
+    } = this.state;
+
     return (
       <div>
         { shoppingCart.map((product) => (
@@ -68,7 +87,7 @@ class Checkout extends Component {
           </div>
 
         )) }
-        <form action="submit">
+        <form>
           <label htmlFor="fullname">
             Nome Completo:
             <input
@@ -142,6 +161,7 @@ class Checkout extends Component {
               type="radio"
               name="radio"
               id="ticket"
+              value="boleto"
               data-testid="ticket-payment"
               defaultChecked
               onChange={ this.onInputChange }
@@ -153,6 +173,7 @@ class Checkout extends Component {
               type="radio"
               name="radio"
               id="visa"
+              value="visa"
               data-testid="visa-payment"
               onChange={ this.onInputChange }
             />
@@ -163,6 +184,7 @@ class Checkout extends Component {
               type="radio"
               name="radio"
               id="master"
+              value="mastercard"
               data-testid="master-payment"
               onChange={ this.onInputChange }
             />
@@ -173,19 +195,20 @@ class Checkout extends Component {
               type="radio"
               name="radio"
               id="elo"
+              value="elo"
               data-testid="elo-payment"
               onChange={ this.onInputChange }
             />
           </label>
           <button
-            type="submit"
+            type="button"
             onClick={ (this.checkoutButton) }
             data-testid="checkout-btn"
           >
             Fazer pedido
           </button>
-          { error && <p data-testid="error-msg">Campos inválidos</p>}
         </form>
+        { error ? <span data-testid="error-msg">Campos inválidos</span> : '' }
       </div>
     );
   }

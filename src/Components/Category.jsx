@@ -30,6 +30,8 @@ class Category extends Component {
 
     return (
       <div className="categories">
+        <p>Categorias</p>
+        <hr />
         {
           categoryProducts.map((category) => (
             <div key={ category.id } className="category">

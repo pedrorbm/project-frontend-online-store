@@ -13,7 +13,14 @@ export default class Products extends Component {
     const { itemCart } = this.state;
     const item = searchResult.find((product) => product.id === id);
     itemCart.push(item);
-    localStorage.setItem('Cart-Item', JSON.stringify(itemCart));
+    // localStorage.setItem('Cart-Item', JSON.stringify(itemCart));
+    const local = JSON.parse(localStorage.getItem('Cart-Item'));
+    if (!local) {
+      localStorage.setItem('Cart-Item', JSON.stringify(itemCart));
+    } else {
+      local.push(item);
+      localStorage.setItem('Cart-Item', JSON.stringify(local));
+    }
   };
 
   render() {

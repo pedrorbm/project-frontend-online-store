@@ -7,13 +7,17 @@ class ShoppingCart extends Component {
   };
 
   componentDidMount() {
-    const cartItems = JSON.parse(localStorage.getItem('Cart-Item'));
-    if (localStorage.length > 0) {
-      this.setState({
-        shoppingCart: cartItems,
-      });
-    }
+    this.getCartItems();
   }
+
+  getCartItems = () => {
+    const cartItems = JSON.parse(localStorage.getItem('Cart-Item'));
+    const isEmpty = cartItems?.length === 0 || cartItems === null;
+    if (!isEmpty) {
+      this.setState((previousState) => ({
+        shoppingCart: [...previousState.shoppingCart, ...cartItems] }));
+    }
+  };
 
   render() {
     const { history } = this.props;
@@ -22,15 +26,14 @@ class ShoppingCart extends Component {
     return (
       <div>
         { shoppingCart.length === 0
-          && (
+          ? (
             <p
               data-testid="shopping-cart-empty-message"
             >
               Seu carrinho está vazio
-            </p>) }
-        <ul>
-          { shoppingCart.map((cartItem) => (
-            <li
+            </p>)
+          : shoppingCart.map((cartItem) => (
+            <div
               key={ cartItem.id }
             >
               <p data-testid="shopping-cart-product-name">{ cartItem.title }</p>
@@ -41,9 +44,8 @@ class ShoppingCart extends Component {
               >
                 { `Quantidade ${number}` }
               </p>
-            </li>
+            </div>
           )) }
-        </ul>
         <button
           type="button"
           onClick={ () => history.push('/checkout') }

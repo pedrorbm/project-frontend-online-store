@@ -29,17 +29,26 @@ class Category extends Component {
     const { categoryProducts } = this.state;
 
     return (
-      categoryProducts.map((category) => (
-        <label data-testid="category" htmlFor={ category.id } key={ category.id }>
-          <input
-            type="radio"
-            id={ category.id }
-            name="category"
-            onChange={ this.getCategory }
-          />
-          { category.name }
-        </label>
-      ))
+      <div className="categories">
+        <p>Categorias</p>
+        <hr />
+        {
+          categoryProducts.map((category) => (
+            <div key={ category.id } className="category">
+              <label data-testid="category" htmlFor={ category.id }>
+                {category.name}
+              </label>
+              <input
+                className="radio-button"
+                type="radio"
+                id={ category.id }
+                name="category"
+                onChange={ this.getCategory }
+              />
+            </div>
+          ))
+        }
+      </div>
     );
   }
 }

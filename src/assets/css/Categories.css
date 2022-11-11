@@ -1,0 +1,23 @@
+.categories {
+  display: inline-block;
+  padding: 2rem;
+}
+
+
+.radio-button {
+  display: none;
+}
+
+.category {
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+
+.category:hover {
+  opacity: 0.6;
+  transition: linear 0.4s;
+}
+
+.category:active {
+  transform: translateY(7px);
+}

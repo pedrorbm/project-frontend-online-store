@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ShoppingCart extends Component {
   state = {
@@ -15,6 +16,7 @@ class ShoppingCart extends Component {
   }
 
   render() {
+    const { history } = this.props;
     const { shoppingCart } = this.state;
     const number = 1;
     return (
@@ -42,9 +44,20 @@ class ShoppingCart extends Component {
             </li>
           )) }
         </ul>
+        <button
+          type="button"
+          onClick={ () => history.push('/checkout') }
+          data-testid="checkout-products"
+        >
+          Finalizar Compra
+        </button>
       </div>
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  history: PropTypes.shape({}),
+}.isRequired;
 
 export default ShoppingCart;

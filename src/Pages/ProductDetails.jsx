@@ -8,7 +8,6 @@ class ProductDetails extends Component {
     thumbnail: '',
     price: '',
     attributes: [],
-    cartItems: [],
   };
 
   async componentDidMount() {
@@ -27,20 +26,19 @@ class ProductDetails extends Component {
     });
   }
 
-  addToCart = async (id) => {
-    const { cartItems } = this.state;
-    const local = JSON.parse(localStorage.getItem('Cart-Item'));
-    const product = await getProductById(id);
-    const array = [];
-    array.push(product);
-    this.setState({
-      cartItems: array,
-    });
-    if (!local) {
+  addToCart = () => {
+    const { title, price, thumbnail, attributes } = this.state;
+    const localCart = JSON.parse(localStorage.getItem('Cart-Item'));
+    const product = {
+      title, thumbnail, attributes, price,
+    };
+    const cartItems = [];
+    cartItems.push(product);
+    if (!localCart) {
       localStorage.setItem('Cart-Item', JSON.stringify(cartItems));
     } else {
-      local.push(product);
-      localStorage.setItem('Cart-Item', JSON.stringify(local));
+      localCart.push(product);
+      localStorage.setItem('Cart-Item', JSON.stringify(localCart));
     }
   };
 

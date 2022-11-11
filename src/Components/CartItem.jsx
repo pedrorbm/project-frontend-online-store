@@ -3,16 +3,40 @@ import PropTypes from 'prop-types';
 
 class CartItem extends Component {
   render() {
-    const { item } = this.props;
-    // console.log(item);
+    const { item, removeFromCart, modifyQud } = this.props;
     return (
       <div className="cartItem">
-        <button type="button">X</button>
+        <button
+          className="btnDeleteCartItem"
+          type="button"
+          onClick={ () => removeFromCart(item.id) }
+        >
+          X
+        </button>
+
         <img src={ item.thumbnail } alt={ item.title } />
+
         <span data-testid="shopping-cart-product-name">{item.title}</span>
-        <button type="button">-</button>
+
+        <button
+          className="btnDecreaseQuantity"
+          data-testid="product-decrease-quantity"
+          type="button"
+          onClick={ () => modifyQud('dec') }
+        >
+          -
+        </button>
+
         <span data-testid="shopping-cart-product-quantity">1</span>
-        <button type="button">+</button>
+
+        <button
+          className="btnIncreaseQuantity"
+          data-testid="product-increase-quantity"
+          type="button"
+          onClick={ () => modifyQud('inc') }
+        >
+          +
+        </button>
         <span>
           R$
           {item.price}
@@ -24,6 +48,8 @@ class CartItem extends Component {
 
 CartItem.defaultProps = {
   item: {},
+  removeFromCart: () => '',
+  modifyQud: () => '',
 };
 
 CartItem.propTypes = {
@@ -33,6 +59,8 @@ CartItem.propTypes = {
     title: PropTypes.string,
     price: PropTypes.number,
   }),
+  removeFromCart: PropTypes.func,
+  modifyQud: PropTypes.func,
 };
 
 export default CartItem;

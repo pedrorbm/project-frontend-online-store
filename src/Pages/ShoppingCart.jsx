@@ -1,27 +1,12 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CartItem from '../Components/CartItem';
-// import { Link } from 'react-router-dom';
-// import CartItems from '../Components/CartItems';
-// import Header from '../Components/Header';
+import CartItemsContainer from '../Components/CartItemsContainer';
+import arrowBack from '../assets/images/icon _arrow back.png';
 
 class ShoppingCart extends Component {
   state = {
     shoppingCart: [],
   };
-
-  // componentDidMount() {
-  //   this.setState({ cart: this.getCartItemsFromStorage() });
-  // }
-
-  // getCartItemsFromStorage = () => {
-  //   // const cartItems = JSON.parse(localStorage.getItem('nomenolocalstorage'));
-  //   const mockCartItems = [
-  //     { id: '001', desc: 'item1', img: '', price: 0 },
-  //     { id: '002', desc: 'item2', img: '', price: 0 },
-  //     { id: '003', desc: 'item3', img: '', price: 0 }];
-  //   return mockCartItems;
-  // };
 
   componentDidMount() {
     this.getCartItems();
@@ -36,32 +21,30 @@ class ShoppingCart extends Component {
     }
   };
 
+  removeFromCart = (id) => {
+    // console.log('cliquei em', id);
+    const local = JSON.parse(localStorage.getItem('Cart-Item'));
+    const filtered = local.filter((item) => item.id !== id);
+    // console.log('array local', local);
+    // console.log('array filtrada', filtered);
+    this.setState({ shoppingCart: filtered }, () => {
+      localStorage.setItem('Cart-Item', JSON.stringify(filtered));
+    });
+  };
+
+  modifyQud = (type) => {
+    const result = 0;
+    return type === 'inc' ? result : result + 1;
+  };
+
   render() {
-    // const { cart } = this.state;
-    // const isCartEmpty = cart.length === 0;
-    // return (
-    //   <>
-    //     <div>
-    //       <Header />
-    //     </div>
-    //     <div>
-    //       <Link to="/">Voltar</Link>
-    //     </div>
-    //     <div>
-    //       { isCartEmpty ? (
-    //         <p data-testid="shopping-cart-empty-message">
-    //           Seu carrinho está vazio
-    //         </p>)
-    //         : (
-    //           <CartItems { ...this.state } />
-    //         )}
-    //     </div>
-    //   </>
     const { shoppingCart } = this.state;
-    // const number = 1;
     return (
-      <div>
-        <Link to="/">Voltar</Link>
+      <div className="shopCartContainer">
+        <Link className="returnToHome" to="/">
+          <img className="arrowGoBack" src={ arrowBack } alt="Arrow_Go_Back" />
+          Voltar
+        </Link>
         { shoppingCart.length === 0
           ? (
             <p
@@ -69,29 +52,15 @@ class ShoppingCart extends Component {
             >
               Seu carrinho está vazio
             </p>)
-          : shoppingCart.map((cartItem) => (
-            <CartItem
-              key={ cartItem.id }
-              item={ cartItem }
-            />)) }
+          : (
+            <CartItemsContainer
+              cartItems={ shoppingCart }
+              removeFromCart={ this.removeFromCart }
+              modifyQud={ this.modifyQud }
+            />) }
       </div>
     );
   }
 }
 
 export default ShoppingCart;
-
-// (
-//   <div
-//     key={ cartItem.id }
-//   >
-//     <p data-testid="shopping-cart-product-name">{ cartItem.title }</p>
-//     <img src={ cartItem.thumbnail } alt={ cartItem.title } />
-//     <p>{`R$ ${cartItem.price}` }</p>
-//     <p
-//       data-testid="shopping-cart-product-quantity"
-//     >
-//       { `Quantidade ${number}` }
-//     </p>
-//   </div>
-// )

@@ -1,3 +1,44 @@
 .cartItem {
-  border: 1px solid blue;
+  align-items: center;
+  display: flex;
+  flex-flow: row wrap;
+  height: 100px;
+  justify-content: space-between;
+  width: 700px;
+  word-break: break-all;
+}
+
+.returnToHome {
+  color: green;
+  display: block;
+  text-decoration: none;
+}
+
+.cartItemContainer {
+  align-items: center;
+  background-color: transparent;
+  box-shadow: 0 -1px 5px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-flow: column wrap;
+  height: 500px;
+  justify-content: space-between;
+  width: 750px;
+}
+
+.btnDeleteCartItem {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.btnDecreaseQuantity {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.btnIncreaseQuantity {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 }

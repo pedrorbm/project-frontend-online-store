@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 class CartItem extends Component {
   render() {
     const { item, removeFromCart, modifyQud } = this.props;
+    // console.log(item);
     return (
       <div className="cartItem">
         <button
           className="btnDeleteCartItem"
+          data-testid="remove-product"
           type="button"
           onClick={ () => removeFromCart(item.id) }
         >
@@ -22,25 +24,22 @@ class CartItem extends Component {
           className="btnDecreaseQuantity"
           data-testid="product-decrease-quantity"
           type="button"
-          onClick={ () => modifyQud('dec') }
+          onClick={ () => modifyQud('dec', item.id) }
         >
           -
         </button>
 
-        <span data-testid="shopping-cart-product-quantity">1</span>
+        <span data-testid="shopping-cart-product-quantity">{item.quantity}</span>
 
         <button
           className="btnIncreaseQuantity"
           data-testid="product-increase-quantity"
           type="button"
-          onClick={ () => modifyQud('inc') }
+          onClick={ () => modifyQud('inc', item.id) }
         >
           +
         </button>
-        <span>
-          R$
-          {item.price}
-        </span>
+        <span>{`R$ ${item.quantity * item.price}`}</span>
       </div>
     );
   }
@@ -58,6 +57,7 @@ CartItem.propTypes = {
     thumbnail: PropTypes.string,
     title: PropTypes.string,
     price: PropTypes.number,
+    quantity: PropTypes.number,
   }),
   removeFromCart: PropTypes.func,
   modifyQud: PropTypes.func,

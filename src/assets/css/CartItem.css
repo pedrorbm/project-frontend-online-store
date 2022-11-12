@@ -21,7 +21,7 @@
   display: flex;
   flex-flow: column wrap;
   height: 500px;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 750px;
 }
 
@@ -32,13 +32,13 @@
 }
 
 .btnDecreaseQuantity {
-  background-color: transparent;
+  background-color: red;
   border: none;
   cursor: pointer;
 }
 
 .btnIncreaseQuantity {
-  background-color: transparent;
+  background-color: green;
   border: none;
   cursor: pointer;
 }

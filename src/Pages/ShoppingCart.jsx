@@ -22,19 +22,32 @@ class ShoppingCart extends Component {
   };
 
   removeFromCart = (id) => {
-    // console.log('cliquei em', id);
     const local = JSON.parse(localStorage.getItem('Cart-Item'));
     const filtered = local.filter((item) => item.id !== id);
-    // console.log('array local', local);
-    // console.log('array filtrada', filtered);
     this.setState({ shoppingCart: filtered }, () => {
       localStorage.setItem('Cart-Item', JSON.stringify(filtered));
     });
   };
 
-  modifyQud = (type) => {
-    const result = 0;
-    return type === 'inc' ? result : result + 1;
+  modifyQud = (type, id) => {
+    const local = JSON.parse(localStorage.getItem('Cart-Item'));
+    const product = local.find((item) => item.id === id);
+    const filtered = local.filter((item) => item.id !== id);
+    if (type === 'inc') {
+      product.quantity += 1;
+      filtered.push(product);
+      this.setState({ shoppingCart: filtered }, () => {
+        localStorage.setItem('Cart-Item', JSON.stringify(filtered));
+      });
+    }
+    if (type === 'dec') {
+      product.quantity -= 1;
+      filtered.push(product);
+      this.setState({ shoppingCart: filtered }, () => {
+        localStorage.setItem('Cart-Item', JSON.stringify(filtered));
+      });
+      if (product.quantity === 0) this.removeFromCart(id);
+    }
   };
 
   render() {

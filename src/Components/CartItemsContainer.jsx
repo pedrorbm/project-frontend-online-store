@@ -7,7 +7,7 @@ class CartItemsContainer extends Component {
     const { cartItems, removeFromCart, modifyQud } = this.props;
     return (
       <div className="cartItemContainer">
-        <h1>Carrinho de Compras</h1>
+        <h1 className="cartItemTitle">Carrinho de Compras</h1>
         {cartItems.map((item, index) => (<CartItem
           key={ `${item.id}-${index}` }
           item={ item }

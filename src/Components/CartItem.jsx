@@ -2,6 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 class CartItem extends Component {
+  disableIncreadButton = () => {
+    const { item } = this.props;
+    if (item.quantity >= item.available_quantity) return true;
+  };
+
   render() {
     const { item, removeFromCart, modifyQud } = this.props;
     // console.log(item);
@@ -42,6 +47,7 @@ class CartItem extends Component {
             data-testid="product-increase-quantity"
             type="button"
             onClick={ () => modifyQud('inc', item.id) }
+            disabled={ this.disableIncreadButton() }
           >
             +
           </button>
@@ -67,6 +73,7 @@ CartItem.propTypes = {
     title: PropTypes.string,
     price: PropTypes.number,
     quantity: PropTypes.number,
+    available_quantity: PropTypes.number,
   }),
   removeFromCart: PropTypes.func,
   modifyQud: PropTypes.func,

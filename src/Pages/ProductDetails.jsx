@@ -5,6 +5,7 @@ import FreeShipping from '../Components/FreeShipping';
 
 class ProductDetails extends Component {
   state = {
+    prodId: '',
     title: '',
     thumbnail: '',
     price: '',
@@ -20,6 +21,7 @@ class ProductDetails extends Component {
     } = this.props;
     const product = await getProductById(id);
     const {
+      id: prodId,
       title,
       price,
       thumbnail,
@@ -27,6 +29,7 @@ class ProductDetails extends Component {
       shipping: { free_shipping: freeShipping },
     } = product;
     this.setState({
+      prodId,
       title,
       price,
       thumbnail,
@@ -36,18 +39,34 @@ class ProductDetails extends Component {
   }
 
   addToCart = () => {
-    const { title, price, thumbnail, attributes } = this.state;
-    const localCart = JSON.parse(localStorage.getItem('Cart-Item'));
-    const product = {
-      title, thumbnail, attributes, price,
-    };
+    const { prodId, title, price, thumbnail, attributes } = this.state;
     const cartItems = [];
+    const product = {
+      id: prodId, title, thumbnail, attributes, price,
+    };
     cartItems.push(product);
+    const localCart = JSON.parse(localStorage.getItem('Cart-Item'));
     if (!localCart) {
+      cartItems[0].quantity = 1;
       localStorage.setItem('Cart-Item', JSON.stringify(cartItems));
     } else {
-      localCart.push(product);
-      localStorage.setItem('Cart-Item', JSON.stringify(localCart));
+      // se já tem no localstorage cai aqui
+      // verifica se já tem o mesmo id no local
+      // se já tiver, filtra o array retirando o produto
+      // depois devolve o produto ao array com o qud alterado
+      const duplicatedProd = localCart.find((item) => item.id === product.id);
+      if (!duplicatedProd) {
+        // se o resultado do find acima for undefined cai aqui
+        product.quantity = 1;
+        localCart.push(product);
+        localStorage.setItem('Cart-Item', JSON.stringify(localCart));
+      }
+      if (duplicatedProd) {
+        const filteredCart = localCart.filter((item) => item.id !== product.id);
+        duplicatedProd.quantity += 1;
+        filteredCart.push(duplicatedProd);
+        localStorage.setItem('Cart-Item', JSON.stringify(filteredCart));
+      }
     }
   };
 

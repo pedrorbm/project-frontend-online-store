@@ -3,23 +3,33 @@ import PropTypes from 'prop-types';
 import ProductCard from './ProductCard';
 
 export default class Products extends Component {
-  state = {
-    itemCart: [],
-  };
-
   addItemCartButton = ({ target }) => {
     const { id } = target;
     const { searchResult } = this.props;
-    const { itemCart } = this.state;
     const item = searchResult.find((product) => product.id === id);
-    itemCart.push(item);
-    // localStorage.setItem('Cart-Item', JSON.stringify(itemCart));
     const local = JSON.parse(localStorage.getItem('Cart-Item'));
+
+    const cartItems = [item];
     if (!local) {
-      localStorage.setItem('Cart-Item', JSON.stringify(itemCart));
+      // se não tiver nada no localstorage
+      cartItems[0].quantity = 1;
+      localStorage.setItem('Cart-Item', JSON.stringify(cartItems));
     } else {
-      local.push(item);
-      localStorage.setItem('Cart-Item', JSON.stringify(local));
+      // se já tiver algo no localstorage
+      const duplicatedProd = local.find((product) => product.id === item.id);
+      if (!duplicatedProd) {
+        // se o resultado do find acima for undefined cai aqui
+        item.quantity = 1;
+        local.push(item);
+        localStorage.setItem('Cart-Item', JSON.stringify(local));
+      }
+      if (duplicatedProd) {
+        // se o resultado do find encontrar o produto
+        const filteredCart = local.filter((product) => product.id !== item.id);
+        duplicatedProd.quantity += 1;
+        filteredCart.push(duplicatedProd);
+        localStorage.setItem('Cart-Item', JSON.stringify(filteredCart));
+      }
     }
   };
 

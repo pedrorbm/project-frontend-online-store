@@ -4,6 +4,7 @@ import Header from './Components/Header';
 import Home from './Pages/Home';
 import ShoppingCart from './Pages/ShoppingCart';
 import ProductDetails from './Pages/ProductDetails';
+import Checkout from './Pages/Checkout';
 import './App.css';
 
 class App extends Component {
@@ -41,6 +42,10 @@ class App extends Component {
                 { ...this.state }
                 handleResult={ this.handleResult }
               />) }
+          />
+          <Route
+            path="/checkout"
+            render={ (props) => <Checkout { ...props } /> }
           />
         </Switch>
       </>

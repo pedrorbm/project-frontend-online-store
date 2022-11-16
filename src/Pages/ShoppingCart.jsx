@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import CartItemsContainer from '../Components/CartItemsContainer';
 import arrowBack from '../assets/images/icon _arrow back.png';
@@ -51,6 +52,7 @@ class ShoppingCart extends Component {
   };
 
   render() {
+    const { history } = this.props;
     const { shoppingCart } = this.state;
     return (
       <div className="shopCartContainer">
@@ -71,9 +73,20 @@ class ShoppingCart extends Component {
               removeFromCart={ this.removeFromCart }
               modifyQud={ this.modifyQud }
             />) }
+        <button
+          type="button"
+          onClick={ () => history.push('/checkout') }
+          data-testid="checkout-products"
+        >
+          Finalizar Compra
+        </button>
       </div>
     );
   }
 }
+
+ShoppingCart.propTypes = {
+  history: PropTypes.shape({}),
+}.isRequired;
 
 export default ShoppingCart;

@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import CartItemsContainer from '../Components/CartItemsContainer';
+import arrowBack from '../assets/images/icon _arrow back.png';
 
 class ShoppingCart extends Component {
   state = {
@@ -18,11 +21,43 @@ class ShoppingCart extends Component {
     }
   };
 
+  removeFromCart = (id) => {
+    const local = JSON.parse(localStorage.getItem('Cart-Item'));
+    const filtered = local.filter((item) => item.id !== id);
+    this.setState({ shoppingCart: filtered }, () => {
+      localStorage.setItem('Cart-Item', JSON.stringify(filtered));
+    });
+  };
+
+  modifyQud = (type, id) => {
+    const local = JSON.parse(localStorage.getItem('Cart-Item'));
+    const product = local.find((item) => item.id === id);
+    const filtered = local.filter((item) => item.id !== id);
+    if (type === 'inc') {
+      product.quantity += 1;
+      filtered.push(product);
+      this.setState({ shoppingCart: filtered }, () => {
+        localStorage.setItem('Cart-Item', JSON.stringify(filtered));
+      });
+    }
+    if (type === 'dec') {
+      product.quantity -= 1;
+      filtered.push(product);
+      this.setState({ shoppingCart: filtered }, () => {
+        localStorage.setItem('Cart-Item', JSON.stringify(filtered));
+      });
+      if (product.quantity === 0) this.removeFromCart(id);
+    }
+  };
+
   render() {
     const { shoppingCart } = this.state;
-    const number = 1;
     return (
-      <div>
+      <div className="shopCartContainer">
+        <Link className="returnToHome" to="/">
+          <img className="arrowGoBack" src={ arrowBack } alt="Arrow_Go_Back" />
+          Voltar
+        </Link>
         { shoppingCart.length === 0
           ? (
             <p
@@ -30,20 +65,12 @@ class ShoppingCart extends Component {
             >
               Seu carrinho está vazio
             </p>)
-          : shoppingCart.map((cartItem) => (
-            <div
-              key={ cartItem.id }
-            >
-              <p data-testid="shopping-cart-product-name">{ cartItem.title }</p>
-              <img src={ cartItem.thumbnail } alt={ cartItem.title } />
-              <p>{`R$ ${cartItem.price}` }</p>
-              <p
-                data-testid="shopping-cart-product-quantity"
-              >
-                { `Quantidade ${number}` }
-              </p>
-            </div>
-          )) }
+          : (
+            <CartItemsContainer
+              cartItems={ shoppingCart }
+              removeFromCart={ this.removeFromCart }
+              modifyQud={ this.modifyQud }
+            />) }
       </div>
     );
   }

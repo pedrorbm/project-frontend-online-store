@@ -5,12 +5,14 @@
 
 input {
   border: 0;
+  border-radius: 2px;
   padding: 0.6rem 0.8rem;
 }
 
 .search-button {
   background-color: rgba(47, 193, 140, 1);
   border: 0;
+  border-radius: 2px;
   color: rgb(249, 237, 237);
   font-weight: 700;
   padding: 0.6rem 0.8rem;

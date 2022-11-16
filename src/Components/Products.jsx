@@ -52,6 +52,7 @@ export default class Products extends Component {
                   thumbnail={ element.thumbnail }
                   price={ element.price }
                   id={ element.id }
+                  freeShipping={ element.shipping.free_shipping }
                   addItemCartButton={ this.addItemCartButton }
                   onProductClick={ () => onProductClick(element.id) }
                 />

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
+import FreeShipping from '../Components/FreeShipping';
 
 class ProductDetails extends Component {
   state = {
@@ -9,6 +10,7 @@ class ProductDetails extends Component {
     thumbnail: '',
     price: '',
     attributes: [],
+    freeShipping: false,
   };
 
   async componentDidMount() {
@@ -18,13 +20,21 @@ class ProductDetails extends Component {
       },
     } = this.props;
     const product = await getProductById(id);
-    const { id: prodId, title, price, thumbnail, attributes } = product;
+    const {
+      id: prodId,
+      title,
+      price,
+      thumbnail,
+      attributes,
+      shipping: { free_shipping: freeShipping },
+    } = product;
     this.setState({
       prodId,
       title,
       price,
       thumbnail,
       attributes,
+      freeShipping,
     });
   }
 
@@ -66,11 +76,12 @@ class ProductDetails extends Component {
         params: { id },
       },
     } = this.props;
-    const { title, thumbnail, price, attributes } = this.state;
+    const { title, thumbnail, price, attributes, freeShipping } = this.state;
     return (
       <section className="product-container">
         <div className="product-detail">
           <div className="product-info">
+            {freeShipping && <FreeShipping />}
             <p data-testid="product-detail-name">{title}</p>
             <img
               src={ thumbnail }
